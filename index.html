@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Payroll Pro - India</title>
+    <style>
+        :root {
+            --primary: #0f172a; --accent: #2563eb; --success: #16a34a;
+            --half: #f59e0b; --danger: #dc2626; --bg: #f8fafc;
+        }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 1200px; }
+        
+        /* Layout Components */
+        .header-box { background: var(--primary); color: white; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow-x: auto; border: 1px solid #e2e8f0; margin-bottom: 15px; }
+        
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; min-width: 1050px; }
+        th { background: #f1f5f9; padding: 12px; font-size: 0.7rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; color: #64748b; }
+        td { padding: 8px; border-bottom: 1px solid #f1f5f9; text-align: center; }
+        
+        input, select { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; outline: none; }
+        .name-input { width: 160px; font-weight: 600; color: var(--primary); }
+        .num-input { width: 80px; font-weight: bold; }
+        
+        /* Status Color Coding */
+        select[data-val="1"] { background: #dcfce7; color: var(--success); font-weight: bold; }
+        select[data-val="0.5"] { background: #fef3c7; color: var(--half); font-weight: bold; }
+        select[data-val="0"] { background: #fee2e2; color: var(--danger); }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; color: white; transition: 0.2s; }
+        .btn-add { background: var(--accent); }
+        .btn-wa { background: #25D366; }
+        .btn-save { background: var(--primary); }
+        .btn-print { background: #64748b; }
+
+        /* History & Search UI */
+        .search-box { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; }
+        .history-card { background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .history-card:hover { border-color: var(--accent); background: #f0f7ff; }
+        .del-small { background: #fee2e2; color: var(--danger); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+
+        @media print { .btn, .no-print, .history-section, .btn-group, .search-box, .del-small { display: none !important; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-box">
+        <div>
+            <h1 style="margin:0; font-size: 1.5rem;">Field Payroll Tracker</h1>
+            <input type="text" id="weekDate" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; padding:5px; border-radius:4px; width: 220px;" value="Week of Jan 7, 2026">
+        </div>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <span>Daily Rate: ₹</span>
+            <input type="number" id="globalRate" value="500" class="num-input" oninput="updateAllRows()">
+        </div>
+    </div>
+
+    <div class="card">
+        <table id="attendanceTable">
+            <thead>
+                <tr>
+                    <th style="text-align:left">Worker Name</th>
+                    <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+                    <th>Days</th>
+                    <th>Advance</th>
+                    <th>Final Payout</th>
+                    <th class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody id="workerBody"></tbody>
+        </table>
+
+        <div class="btn-group">
+            <button class="btn btn-add" onclick="addNewWorker()">+ Add Worker</button>
+            <button class="btn btn-wa" onclick="shareWhatsApp()">WhatsApp Share</button>
+            <button class="btn btn-save" onclick="archiveWeek()">Finish Week & Store</button>
+            <button class="btn btn-print" onclick="window.print()">Download Receipt</button>
+        </div>
+    </div>
+
+    <div class="card no-print">
+        <h3 style="margin:0 0 10px 0">📌 Payment Notes (Pending / Advances)</h3>
+        <textarea id="notes" style="width:100%; height:70px; border:1px solid #ddd; border-radius:8px; padding:12px; font-family:inherit; resize: none;" oninput="saveCurrentState()" placeholder="Write notes here... e.g. Rajesh took 200 advance for home."></textarea>
+    </div>
+
+    <div class="history-section no-print" style="width:100%">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+            <h3 style="margin:0">Work History</h3>
+            <button class="del-small" onclick="clearAllHistory()">Delete All History</button>
+        </div>
+        <input type="text" id="historySearch" class="search-box" placeholder="🔍 Search old records by date or name..." oninput="loadHistory()">
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<script>
+    // --- WORKER ROW MANAGEMENT ---
+    function addNewWorker(name = "", days = [0,0,0,0,0,0,0], advance = 0) {
+        const tbody = document.getElementById('workerBody');
+        const row = document.createElement('tr');
+        let dayCells = '';
+        days.forEach((val) => {
+            dayCells += `<td><select onchange="updateRow(this)" data-val="${val}">
+                <option value="0" ${val==0?'selected':''}>A</option>
+                <option value="1" ${val==1?'selected':''}>P</option>
+                <option value="0.5" ${val==0.5?'selected':''}>H</option>
+            </select></td>`;
+        });
+        row.innerHTML = `
+            <td style="text-align:left"><input type="text" value="${name}" placeholder="Worker Name" class="name-input" oninput="saveCurrentState()"></td>
+            ${dayCells}
+            <td class="total-days" style="font-weight:bold">0</td>
+            <td><input type="number" value="${advance}" class="num-input adv-input" oninput="updateRow(this)"></td>
+            <td class="final-pay" style="font-weight:bold; color:var(--primary)">₹ 0</td>
+            <td class="no-print"><button class="del-small" onclick="removeRow(this)">✕</button></td>
+        `;
+        tbody.appendChild(row);
+        updateRow(row.querySelector('select'));
+    }
+
+    function removeRow(btn) { 
+        if(confirm("Remove this worker?")) { btn.closest('tr').remove(); saveCurrentState(); }
+    }
+
+    function updateRow(el) {
+        const row = el.closest('tr');
+        const rate = parseFloat(document.getElementById('globalRate').value) || 0;
+        let days = 0;
+        row.querySelectorAll('select').forEach(s => { 
+            days += parseFloat(s.value); 
+            s.setAttribute('data-val', s.value); 
+        });
+        const advance = parseFloat(row.querySelector('.adv-input').value) || 0;
+        const totalPay = (days * rate) - advance;
+        row.querySelector('.total-days').innerText = days;
+        row.querySelector('.final-pay').innerText = "₹ " + totalPay.toLocaleString('en-IN');
+        saveCurrentState();
+    }
+
+    function updateAllRows() { 
+        document.querySelectorAll('#workerBody tr').forEach(row => updateRow(row.querySelector('select'))); 
+    }
+
+    // --- AUTO-SAVE (LOCAL STORAGE) ---
+    function saveCurrentState() {
+        const data = { 
+            rate: document.getElementById('globalRate').value, 
+            notes: document.getElementById('notes').value, 
+            week: document.getElementById('weekDate').value, 
+            workers: [] 
+        };
+        document.querySelectorAll('#workerBody tr').forEach(row => {
+            let days = [];
+            row.querySelectorAll('select').forEach(s => days.push(parseFloat(s.value)));
+            data.workers.push({ 
+                name: row.querySelector('.name-input').value, 
+                days: days, 
+                advance: row.querySelector('.adv-input').value 
+            });
+        });
+        localStorage.setItem('field_current_active', JSON.stringify(data));
+    }
+
+    // --- HISTORY LOGIC ---
+    function archiveWeek() {
+        const weekName = document.getElementById('weekDate').value;
+        if(!confirm(`Finish and Archive "${weekName}"? This will clear the current screen.`)) return;
+        
+        const history = JSON.parse(localStorage.getItem('field_history_v2') || "[]");
+        const currentData = JSON.parse(localStorage.getItem('field_current_active'));
+        
+        let totalVal = 0;
+        document.querySelectorAll('.final-pay').forEach(p => totalVal += parseFloat(p.innerText.replace(/[₹,]/g,'')));
+        
+        currentData.payout = totalVal;
+        history.unshift(currentData);
+        localStorage.setItem('field_history_v2', JSON.stringify(history));
+        
+        localStorage.removeItem('field_current_active');
+        location.reload();
+    }
+
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('field_history_v2') || "[]");
+        const searchTerm = document.getElementById('historySearch').value.toLowerCase();
+        const list = document.getElementById('historyList');
+        
+        list.innerHTML = history
+            .filter(h => h.week.toLowerCase().includes(searchTerm))
+            .map((h, index) => `
+                <div class="history-card">
+                    <div style="cursor:pointer; flex:1" onclick="restoreWeek(${index})">
+                        <strong style="color:var(--accent); font-size:1.1rem;">${h.week}</strong><br>
+                        <span style="font-size:0.85rem; color:#64748b">${h.workers.length} Workers • Total Payout: ₹${h.payout.toLocaleString('en-IN')}</span>
+                    </div>
+                    <button class="del-small" onclick="deleteHistoryItem(${index})">Delete</button>
+                </div>
+            `).join('');
+    }
+
+    function restoreWeek(index) {
+        if(!confirm("Load this historical record? Current screen data will be replaced.")) return;
+        const history = JSON.parse(localStorage.getItem('field_history_v2'));
+        localStorage.setItem('field_current_active', JSON.stringify(history[index]));
+        location.reload();
+    }
+
+    function deleteHistoryItem(index) {
+        if(!confirm("Delete this specific record permanently?")) return;
+        let history = JSON.parse(localStorage.getItem('field_history_v2'));
+        history.splice(index, 1);
+        localStorage.setItem('field_history_v2', JSON.stringify(history));
+        loadHistory();
+    }
+
+    function clearAllHistory() {
+        if(!confirm("⚠️ WARNING: This will delete ALL history forever!")) return;
+        localStorage.removeItem('field_history_v2');
+        loadHistory();
+    }
+
+    // --- WHATSAPP SHARE LOGIC ---
+    function shareWhatsApp() {
+        const rate = parseFloat(document.getElementById('globalRate').value) || 0;
+        let text = `*Field Payroll Summary*\n`;
+        text += `📅 *${document.getElementById('weekDate').value}*\n`;
+        text += `💰 *Daily Rate: ₹${rate}*\n`;
+        text += `--------------------------------\n\n`;
+        
+        let grandTotal = 0;
+        let workerCount = 0;
+
+        document.querySelectorAll('#workerBody tr').forEach(row => {
+            const name = row.querySelector('.name-input').value || "Unnamed Worker";
+            const days = parseFloat(row.querySelector('.total-days').innerText);
+            const adv = parseFloat(row.querySelector('.adv-input').value) || 0;
+            const final = (days * rate) - adv;
+            
+            if(days > 0) {
+                text += `▪️ *${name}*\n`;
+                if(adv > 0) {
+                    text += `   (${days} days × ${rate}) - Adv ₹${adv} = *₹${final.toLocaleString('en-IN')}*\n\n`;
+                } else {
+                    text += `   ${days} days × ${rate} = *₹${final.toLocaleString('en-IN')}*\n\n`;
+                }
+                grandTotal += final;
+                workerCount++;
+            }
+        });
+        
+        text += `--------------------------------\n`;
+        text += `👥 *Total Workers:* ${workerCount}\n`;
+        text += `💵 *GRAND TOTAL: ₹${grandTotal.toLocaleString('en-IN')}*\n`;
+        text += `--------------------------------\n`;
+        
+        const noteVal = document.getElementById('notes').value;
+        if(noteVal) text += `\n*Notes:* ${noteVal}`;
+        
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+    }
+
+    // --- INITIALIZATION ---
+    window.onload = () => {
+        const saved = localStorage.getItem('field_current_active');
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('globalRate').value = data.rate;
+            document.getElementById('notes').value = data.notes;
+            document.getElementById('weekDate').value = data.week;
+            data.workers.forEach(w => addNewWorker(w.name, w.days, w.advance));
+        } else {
+            addNewWorker(); // Add one blank row to start
+        }
+        loadHistory();
+    };
+</script>
+</body>
+</html>
