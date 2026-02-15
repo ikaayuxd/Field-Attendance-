@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Village Booth - Hybrid</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #1a1a1a; color: white; margin: 0; padding: 10px; }
+        #box { width: 280px; height: 350px; margin: auto; position: relative; border: 4px solid #555; border-radius: 12px; overflow: hidden; background: #000; }
+        video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .oval { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 210px; border: 2px dashed yellow; border-radius: 50%; pointer-events: none; z-index: 5; }
+        #count { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 80px; font-weight: bold; z-index: 10; display: none; }
+        
+        .ui { margin-top: 15px; background: #333; padding: 15px; border-radius: 15px; }
+        input { width: 85%; padding: 12px; margin-bottom: 10px; border-radius: 5px; border: none; font-size: 16px; }
+        .btn-capture { background: #28a745; color: white; border: none; padding: 15px; width: 90%; border-radius: 8px; font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+        #status { font-size: 12px; color: #ffeb3b; margin-bottom: 10px; }
+        #resultPreview { width: 95%; margin-top: 15px; border: 2px solid white; display: none; margin: 15px auto; }
+        .btn-dl { background: #007bff; color: white; border: none; padding: 15px; width: 90%; border-radius: 8px; font-weight: bold; display: none; margin: 5px auto; }
+    </style>
+</head>
+<body>
+
+    <div id="box">
+        <video id="vid" autoplay playsinline muted></video>
+        <div class="oval" id="guide"></div>
+        <div id="count">3</div>
+    </div>
+    
+    <div id="status">Loading Camera...</div>
+
+    <div class="ui">
+        <input type="text" id="pName" placeholder="NAME">
+        <input type="text" id="pDate" placeholder="DATE">
+        
+        <button class="btn-capture" onclick="manualCapture()">CAPTURE MANUALLY</button>
+        <button id="autoBtn" onclick="enableAuto()" style="background:#666; color:white; border:none; padding:10px; border-radius:5px; width:90%; margin-bottom:10px;">ENABLE AUTO-CAPTURE (AI)</button>
+        
+        <img id="resultPreview">
+        <button id="dlBtn" class="btn-dl" onclick="downloadImage()">DOWNLOAD JPG</button>
+        <button onclick="location.reload()" style="background:#444; color:white; border:none; padding:8px; border-radius:5px; width:40%;">RETAKE</button>
+    </div>
+
+    <canvas id="finalCanvas" style="display:none;"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+
+    <script>
+        const video = document.getElementById('vid');
+        const status = document.getElementById('status');
+        const canvas = document.getElementById('finalCanvas');
+        const preview = document.getElementById('resultPreview');
+        const dlBtn = document.getElementById('dlBtn');
+        const countDisplay = document.getElementById('count');
+        let model;
+        let autoMode = false;
+
+        // 1. Start Camera Immediately (Manual First)
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(s => { 
+                video.srcObject = s;
+                status.innerText = "Camera Ready (Manual Mode)";
+            })
+            .catch(e => status.innerText = "Camera Error: " + e);
+
+        // 2. Optional AI Load
+        async function enableAuto() {
+            document.getElementById('autoBtn').innerText = "Loading AI Files...";
+            try {
+                model = await blazeface.load();
+                autoMode = true;
+                status.innerText = "Auto-Mode Active: Align Face";
+                document.getElementById('autoBtn').style.display = "none";
+                runDetection();
+            } catch (e) {
+                alert("AI failed to load. Please use Manual Capture.");
+                document.getElementById('autoBtn').innerText = "AI Failed (Use Manual)";
+            }
+        }
+
+        async function runDetection() {
+            if (!autoMode) return;
+            const predictions = await model.estimateFaces(video, false);
+            if (predictions.length > 0) {
+                const face = predictions[0];
+                const size = (face.bottomRight[0] - face.topLeft[0]);
+                if (size > 110 && size < 190) {
+                    status.innerText = "HOLD STILL...";
+                    autoMode = false; // Stop detect to prevent double snap
+                    startCountdown();
+                }
+            }
+            setTimeout(runDetection, 250);
+        }
+
+        function startCountdown() {
+            let c = 3;
+            countDisplay.style.display = "block";
+            countDisplay.innerText = c;
+            const timer = setInterval(() => {
+                c--;
+                if (c > 0) { countDisplay.innerText = c; }
+                else { 
+                    clearInterval(timer); 
+                    countDisplay.style.display = "none";
+                    generateSheet(); 
+                }
+            }, 1000);
+        }
+
+        function manualCapture() {
+            status.innerText = "Manual Capture Success!";
+            generateSheet();
+        }
+
+        function generateSheet() {
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1800; canvas.height = 1200;
+            ctx.fillStyle = "white"; ctx.fillRect(0, 0, 1800, 1200);
+
+            const name = document.getElementById('pName').value.toUpperCase();
+            const date = document.getElementById('pDate').value;
+
+            const pCanv = document.createElement('canvas');
+            pCanv.width = 413; pCanv.height = 531;
+            const pCtx = pCanv.getContext('2d');
+            pCtx.translate(413, 0); pCtx.scale(-1, 1);
+            
+            const vW = video.videoWidth; const vH = video.videoHeight;
+            const sW = vH * (413/531); const sX = (vW - sW) / 2;
+            pCtx.drawImage(video, sX, 0, sW, vH, 0, 0, 413, 531);
+            pCtx.setTransform(1, 0, 0, 1, 0, 0);
+
+            if (name || date) {
+                pCtx.fillStyle = "white"; pCtx.fillRect(0, 466, 413, 65);
+                pCtx.fillStyle = "black"; pCtx.textAlign = "center";
+                pCtx.font = "bold 22px Arial"; pCtx.fillText(name, 206, 490);
+                pCtx.font = "18px Arial"; pCtx.fillText(date, 206, 515);
+            }
+
+            const startX = (1800 - (413 * 4 + 30 * 3)) / 2;
+            const startY = (1200 - (531 * 2 + 40)) / 2;
+            for (let row = 0; row < 2; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const x = startX + col * (413 + 30);
+                    const y = startY + row * (531 + 40);
+                    ctx.drawImage(pCanv, x, y);
+                    ctx.strokeStyle = "#000"; ctx.strokeRect(x, y, 413, 531);
+                }
+            }
+
+            preview.src = canvas.toDataURL('image/jpeg', 1.0);
+            preview.style.display = "block";
+            dlBtn.style.display = "block";
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'passport_sheet.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 1.0);
+            link.click();
+        }
+    </script>
+</body>
+</html>
