@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAM Academy | Computer Test - 6 Master Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+        .midnight-blue { background-color: #0f172a; }
+        .gold-accent { color: #ca8a04; }
+        .gold-border { border-color: #ca8a04; }
+        .gold-bg { background-color: #ca8a04; }
+        
+        .question-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media print {
+            body { background-color: white; }
+            .no-print { display: none; }
+            .container { max-width: 100%; width: 100%; padding: 0; }
+            .module-section { break-inside: avoid; page-break-after: always; }
+            .question-card { break-inside: avoid; border: 1px solid #e2e8f0; box-shadow: none; margin-bottom: 1rem; }
+            header { background-color: #0f172a !important; color: white !important; -webkit-print-color-adjust: exact; }
+            .ans-pill { background-color: #f0fdf4 !important; color: #166534 !important; -webkit-print-color-adjust: exact; border: 1px solid #bbf7d0 !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="midnight-blue text-white pt-12 pb-20 border-b-8 gold-border text-center relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 uppercase">Ram Academy</h1>
+            <p class="text-lg md:text-xl font-semibold gold-accent uppercase tracking-widest mb-6">We Believe In Quality Education</p>
+            <div class="inline-block bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20">
+                <span class="text-sm md:text-base font-bold uppercase">Computer Test - 6 | Master Solution Portal</span>
+            </div>
+        </div>
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-32 h-32 bg-yellow-500/10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-yellow-500/10 rounded-full translate-x-24 translate-y-24"></div>
+    </header>
+
+    <main class="container mx-auto px-4 -mt-12 mb-20">
+        <!-- Navigation / Jump to Module -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10 no-print">
+            <a href="#mod1" class="midnight-blue text-white p-4 rounded-xl text-center text-sm font-bold border-b-4 gold-border hover:opacity-90 transition shadow-lg">MOD I: IT & Electronics</a>
+            <a href="#mod2" class="midnight-blue text-white p-4 rounded-xl text-center text-sm font-bold border-b-4 gold-border hover:opacity-90 transition shadow-lg">MOD II: Systems</a>
+            <a href="#mod3" class="midnight-blue text-white p-4 rounded-xl text-center text-sm font-bold border-b-4 gold-border hover:opacity-90 transition shadow-lg">MOD III: Cyber</a>
+            <a href="#mod4" class="midnight-blue text-white p-4 rounded-xl text-center text-sm font-bold border-b-4 gold-border hover:opacity-90 transition shadow-lg">MOD IV: Robotics/AI</a>
+            <a href="#mod5" class="midnight-blue text-white p-4 rounded-xl text-center text-sm font-bold border-b-4 gold-border hover:opacity-90 transition shadow-lg">MOD V: Governance</a>
+        </div>
+
+        <!-- MODULE I -->
+        <section id="mod1" class="module-section mb-16">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="gold-bg text-white p-3 rounded-lg shadow-inner"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg></div>
+                <h2 class="text-2xl font-extrabold text-slate-800 uppercase tracking-tight">Module I: Electronics & Information Technology (1-15)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Q1 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">01</span>
+                        <h3 class="font-bold text-slate-800">बी. सी. एस. सिद्धांत का संबंध किससे है? (The B. C. S. theory is related to -)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) Semiconductor</div>
+                        <div class="font-semibold text-slate-900">(b) Superconductivity</div>
+                        <div>(c) Artificial intelligence</div>
+                        <div>(d) Robotics</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (b)</span>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">02</span>
+                        <h3 class="font-bold text-slate-800">प्रसार भारती का गठन किस वर्ष किया गया? (Prasar Bharati was established in which year?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) 1995</div>
+                        <div>(b) 1976</div>
+                        <div>(c) 1985</div>
+                        <div class="font-semibold text-slate-900">(d) 1997</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (d)</span>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">03</span>
+                        <h3 class="font-bold text-slate-800">कैथोड रे ट्यूब का विकास किसके द्वारा किया गया? (The cathode ray tube was developed by whom?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) Michael Phillips</div>
+                        <div>(b) Albert Hall</div>
+                        <div class="font-semibold text-slate-900">(c) Karl Ferdinand Braun</div>
+                        <div>(d) J.J. Thomson</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (c)</span>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">04</span>
+                        <h3 class="font-bold text-slate-800">निम्नलिखित में से किसका संबंध ट्रांजिस्टर के अविष्कार से नहीं है? (Not related to the invention of transistor?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div class="font-semibold text-slate-900">(a) Albert Hall</div>
+                        <div>(b) John Bardeen</div>
+                        <div>(c) William Shockley</div>
+                        <div>(d) Walter Brattain</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (a)</span>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">05</span>
+                        <h3 class="font-bold text-slate-800">P प्रकार के अर्द्धचालकों के इलेक्ट्रॉनों का संवहन किस कारण से होता है? (Reason for conduction in P-type?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div class="font-semibold text-slate-900">(a) Positive</div>
+                        <div>(b) Negative</div>
+                        <div>(c) Neutral</div>
+                        <div>(d) Both (a) and (b)</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (a)</span>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">06</span>
+                        <h3 class="font-bold text-slate-800">आई. सी. चिप का अविष्कार किसने किया? (Who invented the IC chip?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) M.G. K. Menon</div>
+                        <div>(b) I. C. Kessler</div>
+                        <div>(c) Edmund Halley</div>
+                        <div class="font-semibold text-slate-900">(d) Jack Kilby</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (d)</span>
+                    </div>
+                </div>
+
+                <!-- Q7 - Statement Analysis -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm md:col-span-2">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">07</span>
+                        <h3 class="font-bold text-slate-800">कैथोड रे शॉरिकलोरकोप (Cathode ray oscilloscope) के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए:</h3>
+                    </div>
+                    <div class="bg-slate-50 border-l-4 gold-border p-4 ml-12 mb-4 rounded-r-lg">
+                        <ul class="text-sm space-y-1">
+                            <li>1. यह इलेक्ट्रॉन की गति को नियंत्रित करता है। (It controls electron speed.)</li>
+                            <li>2. यह केवल DC सिग्नल प्रदर्शित कर सकता है। (It can only display DC signal.)</li>
+                        </ul>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div class="font-semibold text-slate-900">(a) Only 1 is correct</div>
+                        <div>(b) Only 2 is correct</div>
+                        <div>(c) Both are correct</div>
+                        <div>(d) Both are incorrect</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (a)</span>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">08</span>
+                        <h3 class="font-bold text-slate-800">भारत में इलेक्ट्रॉनिक्स विभाग की स्थापना किस वर्ष हुई? (Dept of Electronics in India year?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) 1965</div>
+                        <div class="font-semibold text-slate-900">(b) 1970</div>
+                        <div>(c) 1972</div>
+                        <div>(d) 1985</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (b)</span>
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">09</span>
+                        <h3 class="font-bold text-slate-800">3D में दृश्यता हेतु किस रंग के कांच वाले चश्में का प्रयोग किया जाता है? (Visibility in 3D glasses?)</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) Blue</div>
+                        <div>(b) Red</div>
+                        <div class="font-semibold text-slate-900">(c) Blue and red</div>
+                        <div>(d) Blue, red and black</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (c)</span>
+                    </div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">10</span>
+                        <h3 class="font-bold text-slate-800">राष्ट्रीय इलेक्ट्रॉनिक्स नीति 2019 ने किस पूर्व नीति को विस्थापित किया है? (Replacements?)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 gap-2 text-sm text-slate-600 mb-4 pl-12">
+                        <div>(a) National Electronics Policy 2010</div>
+                        <div class="font-semibold text-slate-900">(b) National Electronics Policy 2012</div>
+                        <div>(c) National Electronics Policy 2014</div>
+                        <div>(d) National Electronics Policy 2016</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (b)</span>
+                    </div>
+                </div>
+
+                <!-- Q11 - Table Match -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm md:col-span-2">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">11</span>
+                        <h3 class="font-bold text-slate-800">सत्य कथन की पहचान कीजिए। (Equipment - Inventor Match)</h3>
+                    </div>
+                    <div class="overflow-x-auto ml-12 mb-4">
+                        <table class="w-full text-xs text-left border border-slate-200 rounded-lg overflow-hidden">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="p-2 border-b">Equipment (उपकरण)</th>
+                                    <th class="p-2 border-b">Inventor (आविष्कारक)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr><td class="p-2 text-slate-500">(a) Telephone</td><td class="p-2">Martin Cooper</td></tr>
+                                <tr><td class="p-2 text-slate-500">(b) Mobile</td><td class="p-2">Graham Bell</td></tr>
+                                <tr class="bg-blue-50/50 font-bold text-slate-900 text-sm"><td class="p-2">(c) Mouse</td><td class="p-2">Douglas Engelbart</td></tr>
+                                <tr><td class="p-2 text-slate-500">(d) USB</td><td class="p-2">Christopher Latham</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (c)</span>
+                    </div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">12</span>
+                        <h3 class="font-bold text-slate-800">प्रोजेक्ट लून के संदर्भ में सत्य कथन की पहचान कीजिए। (Project Loon?)</h3>
+                    </div>
+                    <div class="text-sm text-slate-600 mb-4 pl-12 space-y-2">
+                        <div class="font-semibold text-slate-900">(a) It will provide internet connectivity in remote areas.</div>
+                        <div>(b) Project for Supercomputer development in India.</div>
+                        <div>(c) Mission for Space-X Moon communications.</div>
+                        <div>(d) Leading IT nation project.</div>
+                    </div>
+                    <div class="pl-12">
+                        <span class="ans-pill bg-green-50 text-green-700 text-xs font-extrabold border border-green-200 px-4 py-1.5 rounded-full uppercase">Answer: (a)</span>
+                    </div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="midnight-blue text-white text-xs font-black px-3 py-1 rounded-md">13</span>
+                        <h3 class="font-bold text-slate-800">व्हाइट फाई तकनीक (White-fi technology) के संदर्भ में सत्य कथन:</h3>
+                    </div>
+                    <div class="text-sm text-slate-600 mb-4 pl-12 space-y-2">
