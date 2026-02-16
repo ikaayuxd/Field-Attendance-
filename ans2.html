@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAM Academy | Master Portal (100 Questions)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --midnight: #0f172a; --gold: #ca8a04; }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .midnight-bg { background-color: var(--midnight); }
+        .gold-text { color: var(--gold); }
+        .gold-border { border-color: var(--gold); }
+        .gold-bg { background-color: var(--gold); }
+        .card-expand { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0, 1, 0, 1); }
+        .question-card.active .card-expand { max-height: 2000px; transition: max-height 0.4s cubic-bezier(1, 0, 1, 0); }
+        .question-card.active .expand-icon { transform: rotate(180deg); }
+        @media print {
+            .no-print { display: none !important; }
+            .container { max-width: 100%; width: 100%; padding: 0; }
+            .question-card { break-inside: avoid; border: 1px solid #e2e8f0 !important; margin-bottom: 1rem; }
+            .card-expand { max-height: none !important; display: block !important; }
+            .ans-box { background-color: #f0fdf4 !important; border: 1px solid #bbf7d0 !important; -webkit-print-color-adjust: exact; }
+            header { background-color: var(--midnight) !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <header class="midnight-bg text-white pt-16 pb-24 border-b-8 gold-border text-center relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter mb-2">RAM ACADEMY</h1>
+            <p class="text-xl md:text-2xl font-bold gold-text uppercase tracking-widest mb-8">We Believe In Quality Education</p>
+            <div class="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20 shadow-xl">
+                <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-sm font-bold uppercase tracking-wider">COMPUTER TEST - 6 | 100 QUESTION MASTER SET</span>
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 w-64 h-64 bg-gold-bg opacity-10 rounded-full -translate-x-32 -translate-y-32 blur-3xl"></div>
+    </header>
+
+    <main class="container mx-auto px-4 -mt-12 pb-24">
+        <nav class="no-print grid grid-cols-2 md:grid-cols-5 gap-3 mb-12 sticky top-4 z-50">
+            <button onclick="scrollToModule('mod1')" class="midnight-bg text-white py-4 rounded-xl border-b-4 gold-border font-bold hover:scale-105 transition shadow-lg uppercase text-[10px] md:text-xs">Module I</button>
+            <button onclick="scrollToModule('mod2')" class="midnight-bg text-white py-4 rounded-xl border-b-4 gold-border font-bold hover:scale-105 transition shadow-lg uppercase text-[10px] md:text-xs">Module II</button>
+            <button onclick="scrollToModule('mod3')" class="midnight-bg text-white py-4 rounded-xl border-b-4 gold-border font-bold hover:scale-105 transition shadow-lg uppercase text-[10px] md:text-xs">Module III</button>
+            <button onclick="scrollToModule('mod4')" class="midnight-bg text-white py-4 rounded-xl border-b-4 gold-border font-bold hover:scale-105 transition shadow-lg uppercase text-[10px] md:text-xs">Module IV</button>
+            <button onclick="scrollToModule('mod5')" class="midnight-bg text-white py-4 rounded-xl border-b-4 gold-border font-bold hover:scale-105 transition shadow-lg uppercase text-[10px] md:text-xs">Module V</button>
+        </nav>
+
+        <div id="portal-content" class="space-y-16"></div>
+
+        <div class="fixed bottom-8 right-8 no-print z-50">
+            <button onclick="window.print()" class="gold-bg text-white p-4 rounded-full shadow-2xl hover:scale-110 transition flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                <span class="font-bold">PRINT PDF</span>
+            </button>
+        </div>
+    </main>
+
+    <footer class="midnight-bg text-slate-400 py-12 text-center border-t-4 gold-border">
+        <p class="font-bold text-white mb-2 uppercase tracking-widest">RAM ACADEMY JABALPUR</p>
+        <p class="text-sm">Jaiswal Bhawan, Sastri Bridge, Jabalpur | Contact: +91 8989558956</p>
+    </footer>
+
+    <script>
+        const questions = [
+            { id: 1, module: 1, question: "The B. C. S. theory is related to -", options: ["(a) Semiconductor", "(b) Superconductivity", "(c) Artificial intelligence", "(d) Robotics"], answer: "(b) Superconductivity", type: "default", extra: [] },
+            { id: 2, module: 1, question: "Prasar Bharati was established in which year?", options: ["(a) 1995", "(b) 1976", "(c) 1985", "(d) 1997"], answer: "(d) 1997", type: "default", extra: [] },
+            { id: 3, module: 1, question: "The cathode ray tube was developed by whom?", options: ["(a) Michael Phillips", "(b) Albert Hall", "(c) Karl Ferdinand Braun", "(d) J.J. Thomson"], answer: "(c) Karl Ferdinand Braun", type: "default", extra: [] },
+            { id: 4, module: 1, question: "Which one is not related to the invention of transistor?", options: ["(a) Albert Hall", "(b) John Bardeen", "(c) William Shockley", "(d) Walter Brattain"], answer: "(a) Albert Hall", type: "default", extra: [] },
+            { id: 5, module: 1, question: "Reason for conduction of electrons in P-type semiconductors?", options: ["(a) Positive", "(b) Negative", "(c) Neutral", "(d) Both (a) and (b)"], answer: "(a) Positive", type: "default", extra: [] },
+            { id: 6, module: 1, question: "Who invented the IC chip?", options: ["(a) M.G. K. Menon", "(b) I. C. Kessler", "(c) Edmund Halley", "(d) Jack Kilby"], answer: "(d) Jack Kilby", type: "default", extra: [] },
+            { id: 7, module: 1, question: "With reference to cathode ray oscilloscope:", options: ["(a) Only 1 is correct", "(b) Only 2 is correct", "(c) Both correct", "(d) Both incorrect"], answer: "(a) Only 1 is correct", type: "list", extra: ["1. It controls the speed of electrons.", "2. It can only display DC signal."] },
+            { id: 8, module: 1, question: "Dept. of Electronics established in India year?", options: ["(a) 1965", "(b) 1970", "(c) 1972", "(d) 1985"], answer: "(b) 1970", type: "default", extra: [] },
+            { id: 9, module: 1, question: "Visibility colors used in 3D glasses?", options: ["(a) Blue", "(b) Red", "(c) Blue and red", "(d) Blue, red and black"], answer: "(c) Blue and red", type: "default", extra: [] },
+            { id: 10, module: 1, question: "NEP 2019 replaced which policy?", options: ["(a) NEP 2010", "(b) NEP 2012", "(c) NEP 2014", "(d) NEP 2016"], answer: "(b) National Electronics Policy 2012", type: "default", extra: [] },
+            { id: 11, module: 1, question: "Identify the correct Equipment-Inventor match:", options: ["(a) Telephone-Martin Cooper", "(b) Mobile-Graham Bell", "(c) Mouse-Douglas Engelbart", "(d) USB-Christopher Latham"], answer: "(c) Mouse - Douglas Engelbart", type: "default", extra: [] },
+            { id: 12, module: 1, question: "Project Loon correct statement:", options: ["(a) Internet in remote areas", "(b) Supercomputer dev", "(c) Space-X moon mission", "(d) IT leading nation"], answer: "(a) Provide internet connectivity in remote areas", type: "default", extra: [] },
+            { id: 13, module: 1, question: "White-fi technology correct statement:", options: ["(a) Google mission", "(b) Unused TV frequencies", "(c) Dev 2005", "(d) White light used"], answer: "(b) It uses unused frequencies in spectrum used for TV broadcasting", type: "default", extra: [] },
+            { id: 14, module: 1, question: "Headquarter of International Telecommunication Union:", options: ["(a) Paris", "(b) New York", "(c) London", "(d) Geneva"], answer: "(d) Geneva", type: "default", extra: [] },
+            { id: 15, module: 1, question: "TRAI established in which year?", options: ["(a) 1997", "(b) 1985", "(c) 2000", "(d) 1986"], answer: "(a) 1997", type: "default", extra: [] },
+            { id: 16, module: 2, question: "Communication method in Radio Walkie Talkie?", options: ["(a) Simplex", "(b) Half-duplex", "(c) Full duplex", "(d) None"], answer: "(b) Half-duplex method", type: "default", extra: [] },
+            { id: 17, module: 2, question: "First electronic computer of the world?", options: ["(a) UNIVAC", "(b) ENIAC", "(c) EDVAC", "(d) Unitech"], answer: "(b) ENIAC", type: "default", extra: [] },
+            { id: 18, module: 2, question: "Incorrect for Supercomputer:", options: ["(a) Only 1", "(b) 2 and 3", "(c) 1, 2 and 4", "(d) 2, 3 and 4"], answer: "(d) 2, 3 and 4 are incorrect", type: "list", extra: ["1. Seymour Cray is father", "2. Speed in flux", "3. S.R. 1 is first", "4. PARAM-8000 by BARC"] },
+            { id: 19, module: 2, question: "Which is not a type of topology?", options: ["(a) Bus", "(b) Line", "(c) Ring", "(d) Tree"], answer: "(b) Line topology", type: "default", extra: [] },
+            { id: 20, module: 2, question: "Which type of software program an interpreter is?", options: ["(a) System software", "(b) Application", "(c) Utility", "(d) None"], answer: "(a) System software", type: "default", extra: [] },
+            { id: 21, module: 2, question: "Identify the correct match:", options: ["(a) Microsoft-Steve Jobs", "(b) Pentium-Vinod Dham", "(c) TCS-Narayana Murthy", "(d) Google-Bill Gates"], answer: "(b) Pentium Chip - Vinod Dham", type: "default", extra: [] },
+            { id: 22, module: 2, question: "What is IBM?", options: ["(a) Super computer", "(b) Memory type", "(c) Utility software", "(d) IT Company"], answer: "(d) An information technology company", type: "default", extra: [] },
+            { id: 23, module: 2, question: "BSNL establishment year:", options: ["(a) 2000", "(b) 1986", "(c) 1997", "(d) 2002"], answer: "(a) 2000", type: "default", extra: [] },
+            { id: 24, module: 2, question: "Frontier super computer country?", options: ["(a) India", "(b) U.S.A.", "(c) Japan", "(d) Russia"], answer: "(b) U. S. A.", type: "default", extra: [] },
+            { id: 25, module: 2, question: "Memory with least access time?", options: ["(a) RAM", "(b) ROM", "(c) Cache", "(d) Magnetic Core"], answer: "(c) Cache memory", type: "default", extra: [] },
+            { id: 26, module: 2, question: "Which printer is NOT non-impact?", options: ["(a) Dot matrix", "(b) Thermal", "(c) Laser", "(d) Inkjet"], answer: "(a) Dot matrix printer", type: "default", extra: [] },
+            { id: 27, module: 2, question: "Unit of maximum memory size?", options: ["(a) Yotabyte (YB)", "(b) Zettabyte (ZB)", "(c) Petabyte", "(d) Exabyte"], answer: "(a) Yotabyte (YB)", type: "default", extra: [] },
+            { id: 28, module: 2, question: "C-DAC headquarter location?", options: ["(a) Mumbai", "(b) Delhi", "(c) Pune", "(d) Bangalore"], answer: "(c) Pune", type: "default", extra: [] },
+            { id: 29, module: 2, question: "A. J. Paulraj committee focus?", options: ["(a) Super computer", "(b) 5G project", "(c) Li-Fi", "(d) BSNL"], answer: "(b) 5G project", type: "default", extra: [] },
+            { id: 30, module: 2, question: "IMEI number digits?", options: ["(a) 10", "(b) 14", "(c) 16", "(d) 15"], answer: "(d) 15", type: "default", extra: [] },
+            { id: 31, module: 3, question: "Identify incorrect Internet statement:", options: ["(a) Vint Cerf father", "(b) BSNL started it", "(c) HTML-Tim Berners Lee", "(d) WWW father"], answer: "(b) Internet started in India by VSNL (Not BSNL)", type: "default", extra: [] },
+            { id: 32, module: 3, question: "IPv6 statements (64 bit vs 4 sets):", options: ["(a) Only 1", "(b) Only 2", "(c) Both correct", "(d) Both incorrect"], answer: "(d) Both are incorrect (IPv6 is 128 bit)", type: "list", extra: ["1. 64 bit number used for address.", "2. Consists of 4 sets 0-255."] },
+            { id: 33, module: 3, question: "Max characters in Domain name?", options: ["(a) 16", "(b) 32", "(c) 64", "(d) 128"], answer: "(c) 64", type: "default", extra: [] },
+            { id: 34, module: 3, question: "Which is not a search engine?", options: ["(a) Yandex", "(b) Pale moon", "(c) Excite", "(d) Give water"], answer: "(b) Pale moon", type: "default", extra: [] },
+            { id: 35, module: 3, question: "Starlink project company?", options: ["(a) C-DAC", "(b) Amazon", "(c) Google", "(d) Space-X"], answer: "(d) Space-X", type: "default", extra: [] },
+            { id: 36, module: 3, question: "NPCI established year?", options: ["(a) 2008", "(b) 2005", "(c) 2009", "(d) 2007"], answer: "(a) 2008", type: "default", extra: [] },
+            { id: 37, module: 3, question: "Not an Indian search engine?", options: ["(a) Qmamu", "(b) Rediff", "(c) Epic Search", "(d) 123 Bharat"], answer: "(a) Qmamu", type: "default", extra: [] },
+            { id: 38, module: 3, question: "NIC established year?", options: ["(a) 1972", "(b) 1976", "(c) 1980", "(d) 1986"], answer: "(b) 1976", type: "default", extra: [] },
+            { id: 39, module: 3, question: "Net started in India through?", options: ["(a) ARNET", "(b) ERNET", "(c) ARPANET", "(d) ETHERNET"], answer: "(b) ERNET", type: "default", extra: [] },
+            { id: 40, module: 3, question: "What is Ping?", options: ["(a) Protocol software", "(b) Dynamic computer", "(c) Device testing", "(d) Info security"], answer: "(c) Testing of computers/devices on Internet", type: "default", extra: [] },
+            { id: 41, module: 3, question: "Carbon copy related to:", options: ["(a) E-mail", "(b) Browser", "(c) Photocopy", "(d) Search Engine"], answer: "(a) E-mail", type: "default", extra: [] },
+            { id: 42, module: 3, question: "Popular Email protocol?", options: ["(a) SMTP", "(b) HMTP", "(c) HTTP", "(d) MTP"], answer: "(a) SMTP", type: "default", extra: [] },
+            { id: 43, module: 3, question: "Not social platform?", options: ["(a) Google+", "(b) LinkedIn", "(c) Orkut", "(d) Brave"], answer: "(d) Brave", type: "default", extra: [] },
+            { id: 44, module: 3, question: "Sabeer Bhatia relation:", options: ["(a) Hotmail", "(b) Email", "(c) Gmail", "(d) Rediffmail"], answer: "(a) Hotmail", type: "default", extra: [] },
+            { id: 45, module: 3, question: "Indigenous microblogging platform?", options: ["(a) Hike", "(b) koo app", "(c) My Space", "(d) Viber"], answer: "(b) koo app", type: "default", extra: [] },
+            { id: 46, module: 3, question: "Establishment order (increasing):", options: ["(a) YT<FB<LI<TW", "(b) TW<YT<FB<LI", "(c) FB<YT<TW<LI", "(d) LI<FB<YT<TW"], answer: "(d) LinkedIn < Facebook < YouTube < Twitter", type: "default", extra: [] },
+            { id: 47, module: 3, question: "Founder of Signal app?", options: ["(a) Brian Silver Men", "(b) Brian Acton", "(c) Ajit B", "(d) Allen Blue"], answer: "(b) Brian Acton", type: "default", extra: [] },
+            { id: 48, module: 3, question: "Horizon Workrooms by?", options: ["(a) Facebook", "(b) Twitter", "(c) YT", "(d) WhatsApp"], answer: "(a) Facebook", type: "default", extra: [] },
+            { id: 49, module: 3, question: "Twitter word limit?", options: ["(a) 140", "(b) 180", "(c) 240", "(d) 280"], answer: "(d) 280", type: "default", extra: [] },
+            { id: 50, module: 3, question: "Google social platform:", options: ["(a) Viber", "(b) Orkut", "(c) Quora", "(d) Quizon"], answer: "(b) Orkut", type: "default", extra: [] },
+            { id: 51, module: 3, question: "Abusive words written online:", options: ["(a) Bug", "(b) Flax", "(c) Propagation", "(d) Flame"], answer: "(d) Flame", type: "default", extra: [] },
+            { id: 52, module: 3, question: "Which is a computer virus?", options: ["(a) Kaspersky", "(b) AVG", "(c) Symentac", "(d) Mydoom"], answer: "(d) Mydoom", type: "default", extra: [] },
+            { id: 53, module: 3, question: "What is Patch?", options: ["(a) Bug fix software", "(b) Virus file", "(c) Ads", "(d) None"], answer: "(a) Small software to fix drawbacks", type: "default", extra: [] },
+            { id: 54, module: 3, question: "Espionage software?", options: ["(a) Stuxnet", "(b) Melia", "(c) Keylogger", "(d) Creeper"], answer: "(c) Keylogger", type: "default", extra: [] },
+            { id: 55, module: 3, question: "Junk email name:", options: ["(a) Spoof", "(b) Scrap", "(c) Spam", "(d) Warm"], answer: "(c) Spam", type: "default", extra: [] },
+            { id: 56, module: 3, question: "Cyber Crime portal year?", options: ["(a) 2014", "(b) 2019", "(c) 2015", "(d) 2017"], answer: "(b) 2019", type: "default", extra: [] },
+            { id: 57, module: 3, question: "Not cyber protection?", options: ["(a) Clickjacking", "(b) Proxy", "(c) Firewall", "(d) Cryptography"], answer: "(a) Clickjacking", type: "default", extra: [] },
+            { id: 58, module: 3, question: "CCTNS project year:", options: ["(a) 2005", "(b) 2009", "(c) 2013", "(d) 2017"], answer: "(b) 2009", type: "default", extra: [] },
+            { id: 59, module: 3, question: "IT Act amendment year:", options: ["(a) 2002", "(b) 2004", "(c) 2008", "(d) 2011"], answer: "(c) 2008", type: "default", extra: [] },
+            { id: 60, module: 3, question: "What is 'Libra'?", options: ["(a) Virus", "(b) Antivirus", "(c) Task force", "(d) FB Crypto"], answer: "(d) Cryptocurrency of Facebook", type: "default", extra: [] },
+            { id: 61, module: 4, question: "Robotics Observatory MP location?", options: ["(a) Indore", "(b) Ujjain", "(c) Bhopal", "(d) Jabalpur"], answer: "(b) Ujjain", type: "default", extra: [] },
+            { id: 62, module: 4, question: "Father of modern robotics?", options: ["(a) Joseph Engelberger", "(b) Karel Capek", "(c) Isaac Asimov", "(d) George C. Devol"], answer: "(a) Joseph Engelberger", type: "default", extra: [] },
+            { id: 63, module: 4, question: "Robotics Assoc HQ?", options: ["(a) NY", "(b) Vienna", "(c) Paris", "(d) Frankfurt"], answer: "(d) Frankfurt", type: "default", extra: [] },
+            { id: 64, module: 4, question: "India's 1st banking robot?", options: ["(a) Lakshmi", "(b) Rashmi", "(c) Manav", "(d) Garuda"], answer: "(a) Lakshmi", type: "default", extra: [] },
+            { id: 65, module: 4, question: "Robot end effectors parts?", options: ["(a) Hand", "(b) Arm", "(c) Legs", "(d) Neck"], answer: "(a) Hand", type: "default", extra: [] },
+            { id: 66, module: 4, question: "1st living robot name?", options: ["(a) Pioneer", "(b) DARPA", "(c) Xenobots", "(d) Abyss"], answer: "(c) Xenobots", type: "default", extra: [] },
+            { id: 67, module: 4, question: "Military robot example?", options: ["(a) Unimates", "(b) Robocops", "(c) Bravo", "(d) Daksh"], answer: "(d) Daksh", type: "default", extra: [] },
+            { id: 68, module: 4, question: "Who formulated laws of robotics?", options: ["(a) John McCarthy", "(b) Isaac Asimov", "(c) Joseph Capek", "(d) Ralph Holley"], answer: "(b) Isaac Asimov", type: "default", extra: [] },
+            { id: 69, module: 4, question: "CAIR HQ location?", options: ["(a) Bangalore", "(b) Pune", "(c) Hyderabad", "(d) Mumbai"], answer: "(a) Bangalore", type: "default", extra: [] },
+            { id: 70, module: 4, question: "Sophia citizenship country?", options: ["(a) Saudi Arabia", "(b) UAE", "(c) Hong Kong", "(d) USA"], answer: "(a) Saudi Arabia", type: "default", extra: [] },
+            { id: 71, module: 4, question
